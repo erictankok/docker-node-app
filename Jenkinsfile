@@ -24,21 +24,18 @@ pipeline {
                 sh "docker tag ${params.DTR_IP}/engineering/docker-node-app ${params.DTR_IP}/engineering/docker-node-app:1.${BUILD_NUMBER}"
             }
         }
-        stage('DTR Push') {
+        stage('Image Test') {
+            steps {
+                sh "docker run -itd --rm -p ${params.HOST_PORT}:${params.CONTAINER_PORT} --name docker-node-app ${params.DTR_IP}/engineering/docker-node-app"
+                sh "while ! curl --output /dev/null --silent --head --fail http://localhost:${params.HOST_PORT}; do sleep 1 && echo -n .; done"
+                sh "docker stop docker-node-app"
+            }
+        }
+        stage('Image Push') {
             steps {
                 sh "docker login -u ${params.UCP_USER} -p ${params.UCP_PASSWORD} ${params.DTR_IP}"
                 sh "docker push ${params.DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker push ${params.DTR_IP}/engineering/docker-node-app:1.${BUILD_NUMBER}"
-            }
-        }
-        stage('App Deploy') {
-            steps {
-                sh "echo 'App Deploy'"
-            }
-        }
-        stage('App Test') {
-            steps {
-                sh "echo 'App Test'"
             }
         }
     }
