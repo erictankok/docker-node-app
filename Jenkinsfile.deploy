@@ -13,7 +13,7 @@ pipeline {
         DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE}"
         DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE}"
         DOCKER_TLS_VERIFY = '1'
-        DOCKER_CERT_PATH = "/home/jenkins/ucp-bundle-admin"
+        DOCKER_CERT_PATH = "/home/jenkins/ucp-bundle-ucpadmin"
         DOCKER_HOST = "tcp://ucp.erictankok.dtcntr.net:443"
     }
     stages {
