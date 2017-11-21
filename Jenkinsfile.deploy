@@ -23,9 +23,9 @@ pipeline {
                 sh "docker rmi ${DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker pull ${DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker pull clusterhq/mongodb"
-                sh "docker stack deploy -c docker-compose.yml node-app"
+                sh "docker stack deploy -c docker-compose.yml nodeapp"
                 // Run Stack Deploy Once
-                // sh "docker service update --image ${DTR_IP}/engineering/docker-node-app:latest node-app
+                // sh "docker service update --image ${DTR_IP}/engineering/docker-node-app:latest nodeapp
             }
         }
     }
