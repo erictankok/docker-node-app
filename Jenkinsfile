@@ -3,7 +3,7 @@ pipeline {
     parameters {
         string(name: 'DTR_IP', defaultValue: 'dtr.erictankok.dtcntr.net')
         string(name: 'UCP_USER', defaultValue: 'ucpadmin')
-        string(name: 'UCP_PASSWORD', defaultValue: '')
+        string(name: 'UCP_PASSWORD', defaultValue: 'ucpadmin')
         string(name: 'DOCKER_CONTENT_TRUST', defaultValue: '0')
         string(name: 'DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE', defaultValue: '')
         string(name: 'DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE', defaultValue: '')
@@ -19,6 +19,7 @@ pipeline {
         stage('Image Build') {
             steps {
                 sh "env"
+                sh "docker rmi ${params.DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker build -t ${params.DTR_IP}/engineering/docker-node-app ."
                 sh "docker tag ${params.DTR_IP}/engineering/docker-node-app ${params.DTR_IP}/engineering/docker-node-app:1.${BUILD_NUMBER}"
             }
