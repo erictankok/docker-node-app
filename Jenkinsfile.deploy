@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'DTR_IP', defaultValue: 'dtr.erictankok.dtcntr.net')
+        string(name: 'UCP_USER', defaultValue: 'ucpadmin')
+        string(name: 'UCP_PASSWORD', defaultValue: 'ucpadmin')
+        string(name: 'DOCKER_CONTENT_TRUST', defaultValue: '0')
+        string(name: 'DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE', defaultValue: '')
+        string(name: 'DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE', defaultValue: '')
+    }
+    environment {
+        DOCKER_CONTENT_TRUST = "${params.DOCKER_CONTENT_TRUST}" 
+        DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE}"
+        DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE}"
+        DOCKER_TLS_VERIFY = '1'
+        DOCKER_CERT_PATH = "/home/jenkins/ucp-bundle-admin"
+        DOCKER_HOST = "tcp://ucp.erictankok.dtcntr.net:443"
+    }
+    stages {
+        stage('App Deploy') {
+            steps {
+                sh "docker login -u ${params.UCP_USER} -p ${params.UCP_PASSWORD} ${params.DTR_IP}"
+                sh "docker rmi ${DTR_IP}/engineering/docker-node-app:latest"
+                sh "docker pull ${DTR_IP}/engineering/docker-node-app:latest"
+                sh "docker pull clusterhq/mongodb"
+                sh "docker stack deploy -c docker-compose.yml node-app"
+                // Run Stack Deploy Once
+                // sh "docker service update --image ${DTR_IP}/engineering/docker-node-app:latest node-app
+            }
+        }
+    }
+}
