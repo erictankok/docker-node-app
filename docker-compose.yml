@@ -6,7 +6,7 @@ services:
     deploy:
       replicas: 3
       labels:
-        com.docker.ucp.mesh.http: "external_route=http://node-app.erictankok.dtcntr.net,internal_port=4000"
+        com.docker.ucp.mesh.http: "external_route=http://nodeapp.erictankok.dtcntr.net,internal_port=4000"
     environment:
       - "MONGODB_SERVICE_SERVICE_HOST=nodeapp_db"
     ports:
