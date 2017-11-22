@@ -20,7 +20,7 @@ pipeline {
         stage('App Deploy') {
             steps {
                 sh "docker login -u ${params.UCP_USER} -p ${params.UCP_PASSWORD} ${params.DTR_IP}"
-                sh "docker rmi ${DTR_IP}/engineering/docker-node-app:latest"
+                // sh "docker rmi ${DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker pull ${DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker pull clusterhq/mongodb"
                 // Run Stack Deploy Once
