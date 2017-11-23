@@ -1,26 +1,34 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'DTR_IP', defaultValue: 'dtr.erictankok.dtcntr.net')
+        string(name: 'UCP_USER', defaultValue: 'ucpadmin')
+        string(name: 'UCP_PASSWORD', defaultValue: 'ucpadmin')
+        string(name: 'DOCKER_CONTENT_TRUST', defaultValue: '0')
+        string(name: 'DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE', defaultValue: 'docker123')
+        string(name: 'DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE', defaultValue: 'docker123')
+        string(name: 'DOCKER_TLS_VERIFY', defaultValue: '1')
+        string(name: 'DOCKER_CERT_PATH', defaultValue: '/home/jenkins/ucp-bundle-ucpadmin')
+        string(name: 'DOCKER_HOST', defaultValue: 'tcp://54.255.241.87:443')
+    }
     environment {
-        DTR_IP = "dtr.erictankok.dtcntr.net"
-        UCP_USER = "ucpadmin"
-        UCP_PASSWORD = "ucpadmin"
-        DOCKER_CONTENT_TRUST = "0" 
-        DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE = "docker123"
-        DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE = "docker123"
-        DOCKER_TLS_VERIFY = "1"
-        DOCKER_CERT_PATH = "/home/jenkins/ucp-bundle-ucpadmin"
-        DOCKER_HOST = "tcp://54.255.241.87:443"
+        DOCKER_CONTENT_TRUST = "${params.DOCKER_CONTENT_TRUST}" 
+        DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE}"
+        DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE}"
+        DOCKER_TLS_VERIFY = ${params.DOCKER_TLS_VERIFY}
+        DOCKER_CERT_PATH = ${params.DOCKER_CERT_PATH}
+        DOCKER_HOST = ${params.DOCKER_HOST}
     }
     stages {
         stage('App Deploy') {
             steps {
                 sh "docker login -u ${params.UCP_USER} -p ${params.UCP_PASSWORD} ${params.DTR_IP}"
-                // sh "docker rmi ${DTR_IP}/engineering/docker-node-app:latest"
-                sh "docker pull ${DTR_IP}/engineering/docker-node-app:latest"
+                // sh "docker rmi ${params.DTR_IP}/engineering/docker-node-app:latest"
+                sh "docker pull ${params.DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker pull clusterhq/mongodb"
                 // Run Stack Deploy Once
                 // sh "docker stack deploy -c docker-compose.yml nodeapp"
-                sh "docker service update --image ${DTR_IP}/engineering/docker-node-app:latest nodeapp_app"
+                sh "docker service update --image ${params.DTR_IP}/engineering/docker-node-app:latest nodeapp_app"
             }
         }
     }
