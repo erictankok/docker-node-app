@@ -1,19 +1,12 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'DTR_IP', defaultValue: 'dtr.erictankok.dtcntr.net')
-        string(name: 'UCP_USER', defaultValue: 'ucpadmin')
-        string(name: 'UCP_PASSWORD', defaultValue: 'ucpadmin')
-        string(name: 'DOCKER_CONTENT_TRUST', defaultValue: '0')
-        string(name: 'DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE', defaultValue: '')
-        string(name: 'DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE', defaultValue: '')
-        string(name: 'HOST_PORT', defaultValue: '4000')
-        string(name: 'CONTAINER_PORT', defaultValue: '4000')
-    }
     environment {
-        DOCKER_CONTENT_TRUST = "${params.DOCKER_CONTENT_TRUST}" 
-        DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE}"
-        DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE = "${params.DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE}"
+        DTR_IP = "dtr.erictankok.dtcntr.net"
+        UCP_USER = "ucpadmin"
+        UCP_PASSWORD = "ucpadmin"
+        DOCKER_CONTENT_TRUST = "0" 
+        DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE = "docker123"
+        DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE = "docker123"
     }
     stages {
         stage('Image Build') {
