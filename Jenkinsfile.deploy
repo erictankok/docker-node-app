@@ -23,9 +23,12 @@ pipeline {
         stage('App Deploy') {
             steps {
                 sh "docker login -u ${params.UCP_USER} -p ${params.UCP_PASSWORD} ${params.DTR_IP}"
+                sh "echo ==== After Login ===="
                 // sh "docker rmi ${params.DTR_IP}/engineering/docker-node-app:latest"
                 sh "docker pull ${params.DTR_IP}/engineering/docker-node-app:latest"
+                sh "echo ==== After NodeApp Pull ===="
                 sh "docker pull clusterhq/mongodb"
+                sh "echo ==== After MongoDB Pull ===="
                 // Run Stack Deploy Once
                 // sh "docker stack deploy -c docker-compose.yml nodeapp"
                 sh "docker service update --image ${params.DTR_IP}/engineering/docker-node-app:latest nodeapp_app"
