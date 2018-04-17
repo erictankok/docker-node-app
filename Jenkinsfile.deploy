@@ -2,7 +2,7 @@ pipeline {
     agent any
     parameters {
         // string(name: 'DTR_IP', defaultValue: 'dtr.erictankok.dtcntr.net')
-        string(name: 'DTR_IP', defaultValue: '54.254.254.110')
+        string(name: 'DTR_IP', defaultValue: '13.250.55.200')
         string(name: 'UCP_USER', defaultValue: 'ucpadmin')
         string(name: 'UCP_PASSWORD', defaultValue: 'ucpadmin')
         string(name: 'DOCKER_CONTENT_TRUST', defaultValue: '0')
@@ -11,7 +11,7 @@ pipeline {
         string(name: 'DOCKER_TLS_VERIFY', defaultValue: '1')
         string(name: 'DOCKER_CERT_PATH', defaultValue: '/home/jenkins/ucp-bundle-ucpadmin')
         // string(name: 'DOCKER_HOST', defaultValue: 'tcp://54.255.241.87:443')
-        string(name: 'DOCKER_HOST', defaultValue: 'tcp://13.228.25.81:443')
+        string(name: 'DOCKER_HOST', defaultValue: 'tcp://13.229.94.64:443')
     }
     environment {
         DOCKER_CONTENT_TRUST = "${params.DOCKER_CONTENT_TRUST}" 
@@ -33,7 +33,6 @@ pipeline {
                 sh "echo ==== After MongoDB Pull ===="
                 // Run Stack Deploy Once
                 // sh "docker stack deploy -c docker-compose.yml nodeapp"
-                // sh "docker stack deploy -c beta-docker-compose.yml nodeapp"
                 sh "docker service update --image ${params.DTR_IP}/engineering/docker-node-app:latest nodeapp_app"
             }
         }
