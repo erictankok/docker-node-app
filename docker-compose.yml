@@ -11,6 +11,8 @@ services:
         - "com.docker.lb.network=nodeapp_nodeapp-network"
     environment:
       - "MONGODB_SERVICE_SERVICE_HOST=nodeapp_db"
+    ports:
+      - 4000:4000
     networks:
       - nodeapp-network
 
