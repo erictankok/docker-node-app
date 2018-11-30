@@ -2,7 +2,8 @@ pipeline {
     agent any
     parameters {
         // string(name: 'DTR_IP', defaultValue: 'dtr.erictankok.dtcntr.net')
-        string(name: 'DTR_IP', defaultValue: '13.250.55.200')
+        // string(name: 'DTR_IP', defaultValue: '13.250.55.200')
+        string(name: 'DTR_IP', defaultValue: 'dtr-ee2-aws.erictankok.dtcntr.net')
         string(name: 'UCP_USER', defaultValue: 'ucpadmin')
         string(name: 'UCP_PASSWORD', defaultValue: 'ucpadmin')
         string(name: 'DOCKER_CONTENT_TRUST', defaultValue: '0')

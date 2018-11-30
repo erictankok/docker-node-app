@@ -6,7 +6,7 @@ services:
     deploy:
       replicas: 3
       labels:
-        - "com.docker.lb.hosts=ee2-nodeapp.erictankok.dtcntr.net"
+        - "com.docker.lb.hosts=nodeapp-ee2-aws.erictankok.dtcntr.net/"
         - "com.docker.lb.port=4000"
         - "com.docker.lb.network=nodeapp_nodeapp-network"
     environment:
